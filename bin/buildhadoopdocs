@@ -1,0 +1,5 @@
+#!/bin/bash
+
+compilehadoop2
+mvn clean site && \
+mvn site:stage -DstagingDirectory=/tmp/hadoop-site

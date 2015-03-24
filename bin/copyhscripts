@@ -1,0 +1,50 @@
+#!/bin/bash
+
+hadoophome=~/HADOOP/hadoop-3.0.0-SNAPSHOT
+common="hadoop-common-project/hadoop-common/src/main"
+hdfs="hadoop-hdfs-project/hadoop-hdfs/src/main"
+yarn="hadoop-yarn-project/hadoop-yarn"
+mapred="hadoop-mapreduce-project"
+kms="hadoop-common-project/hadoop-kms/src/main"
+
+function copier
+{
+	local dest=$1
+	shift 
+
+	for i in $@
+	do
+		cp $i $dest
+		chmod a+rx ${dest}/$(basename $i)
+	done
+}
+
+
+copier ${hadoophome}/bin \
+	${common}/bin/hadoop ${common}/bin/slaves.sh ${common}/bin/rcc \
+	${hdfs}/bin/hdfs \
+	${yarn}/bin/yarn \
+	${mapred}/bin/mapred 
+
+copier	${hadoophome}/libexec \
+	${common}/bin/hadoop-functions.sh ${common}/bin/hadoop-config.sh \
+	${hdfs}/bin/hdfs-config.sh \
+	${mapred}/bin/mapred-config.sh \
+	${yarn}/bin/yarn-config.sh \
+	${kms}/libexec/kms-config.sh
+
+copier ${hadoophome}/libexec/shellprofile.d \
+	${hdfs}/shellprofile.d/* \
+	${yarn}/shellprofile.d/* \
+	${mapred}/shellprofile.d/*
+
+copier ${hadoophome}/sbin \
+        ${common}/bin/*-daemon.sh \
+        ${common}/bin/*-daemons.sh \
+        ${hdfs}/bin/start-dfs.sh \
+        ${hdfs}/bin/stop-dfs.sh \
+	${yarn}/bin/start-yarn.sh \
+	${yarn}/bin/stop-yarn.sh \
+        ${yarn}/bin/yarn-daemon*.sh \
+	${kms}/sbin/kms.sh
+

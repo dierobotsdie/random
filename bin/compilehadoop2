@@ -1,0 +1,35 @@
+#!/bin/bash
+
+VERSION=$1
+shift;
+if [ -n "${VERSION}" ]; then
+	VERSIONFLAG="-Dversion=$VERSION"
+fi
+
+
+
+umask 022
+
+#export CFLAGS="-I/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Headers/"
+#export LDFLAGS="-L$JAVA_HOME/../Libraries"
+export JAVA_HOME=`/usr/libexec/java_home`
+MAVEN_OPTS="-Xms256m -Xmx512m -Djava.awt.headless=true"
+# -DskipTests
+#mvn clean install -Pdist -Dtar  \
+#	-Dtomcat.download.url=file:///Users/aw/Src/dl/apache-tomcat-6.0.36.tar.gz "${@}"
+
+mvn -Pdist -Pnative -Psrc \
+	-Drequire.snappy  -DstagingDirectory=/tmp/hadoop-site \
+	-Dtar -DskipTests -DskipTest -DskipITs \
+	${VERSIONFLAG}  install
+
+#	-Dtomcat.download.url=file:///Users/aw/Src/dl/apache-tomcat-6.0.36.tar.gz \
+#	-Dtomcat.version=6.0.36 \
+
+
+#ANT_OPTS="-d${JVM_DATA_MODEL} " ant \
+#        -Djsvc.location=http://archive.apache.org/dist/commons/daemon/binaries/1.0.2/darwin/commons-daemon-1.0.2-bin-darwin-universal.tar.gz \
+#	-Djava5.home=$JAVA5_HOME \
+#	-Dforrest.home=$FORREST_HOME \
+#	$VERSIONFLAG \
+#	${*}

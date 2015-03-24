@@ -1,0 +1,14 @@
+stuff="
+	hadoop-common-project/hadoop-common/src/site/resources/configuration.xsl
+	hadoop-common-project/hadoop-common/src/site/resources/core-default.xml
+	hadoop-hdfs-project/hadoop-hdfs/src/site/resources/configuration.xsl
+	hadoop-hdfs-project/hadoop-hdfs/src/site/resources/hdfs-default.xml
+	hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-core/src/site/resources/configuration.xsl
+	hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/site/
+	hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-common/src/site/
+"
+
+for i in $stuff
+do
+	rm -rf $stuff
+done

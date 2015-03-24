@@ -1,0 +1,26 @@
+
+HDFS="namenode datanode"
+YARN="resourcemanager nodemanager proxyserver timelineserver"
+
+for i in $YARN
+do
+bin/yarn --daemon stop $i
+done
+
+for i in $HDFS
+do
+bin/hdfs --daemon stop  $i
+done
+
+for i in $HDFS
+do
+bin/hdfs --daemon start $i
+done
+
+for i in $YARN
+do
+bin/yarn --daemon start $i
+done
+
+
+
